@@ -1,6 +1,6 @@
 {
   "name": "ooft",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "front end image smaller maker",
   "main": "index.js",
   "scripts": {
