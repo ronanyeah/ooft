@@ -1,0 +1,22 @@
+{
+  "name": "ooft",
+  "version": "0.9.0",
+  "description": "front end image smaller maker",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronanyeah/ooft.git"
+  },
+  "author": "ronanyeah",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ronanyeah/ooft/issues"
+  },
+  "homepage": "https://github.com/ronanyeah/ooft#readme",
+  "devDependencies": {
+    "tape": "^4.4.0"
+  }
+}
