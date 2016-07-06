@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/*.js"
+    "dist": "webpack",
     "docs": "documentation build --format html --output ./docs ./src/index.js"
   },
   "repository": {
@@ -20,5 +21,6 @@
   "devDependencies": {
     "tape": "^4.4.0"
     "documentation": "^4.0.0-beta5",
+    "webpack": "^1.13.1"
   }
 }
