@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test/*.js"
+    "docs": "documentation build --format html --output ./docs ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,6 @@
   "homepage": "https://github.com/ronanyeah/ooft#readme",
   "devDependencies": {
     "tape": "^4.4.0"
+    "documentation": "^4.0.0-beta5",
   }
 }
