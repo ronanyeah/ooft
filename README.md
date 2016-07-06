@@ -1,46 +1,61 @@
 # ooft
 
-Takes an image file and shrinks it to the size of your liking, in a promise. Only usable on the front end at the moment due to it using several browser APIs, and will likely have trouble with any IE before 11. Also due to being 'required' it needs to be used alongside [`browserify`](https://www.npmjs.com/package/browserify) or [`webpack`](https://www.npmjs.com/package/webpack).
+Takes an image file and shrinks it to a size of your liking, using only the wonders of JavaScript. Browser support is not great due it's use of several experimental APIs, especially `Blob` but I'm looking into alternative solutions. Can be used with [`browserify`](https://www.npmjs.com/package/browserify), [`webpack`](https://www.npmjs.com/package/webpack), or `dist/ooft.js` can be included directly in your project.
+
+Why does this exist? I wanted to upload pictures from my phone quickly on a mobile connection and the >3MB images the camera was taking were making it difficult.
+
+### Browser APIs in use
+- [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array)
+- [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob)
+- [`FileReader`](https://developer.mozilla.org/en/docs/Web/API/FileReader)
 
 ### Example Usage:
-
 ```
-var options = {
+let options = {
 
-  // Desired file size in MB.
+  // Desired output file size in MB.
   // Required.
   outputSize: 2,
 
-  // Percentage buffer acceptable for output size.
-  // Default is 10.
+  // Percentage accuracy tolerance acceptable for output size.
+  // Default is 10%.
   buffer: 10,
 
-  // Desired format, 'jpg' or 'png'.
+  // Desired output format, 'jpg' or 'png'.
   // Default is 'jpg'.
   format: 'jpg'
 
 };
 ```
 ```
-var ooft = require('ooft');
+<input id='imageFile' type='file' name='picture' accept='image/*' capture='camera'>
+```
+```
+let ooft = require('ooft');
+
+let file = document.getElementById('imageFile').files[0];
 
 ooft(file, options)
-.then(function(data) {
-  //http://stackoverflow.com/questions/21044798/how-to-use-formdata-for-ajax-file-upload
-  var formData = new FormData();
-  formData.append('image', data);
+.then( file => {
 
-  $.ajax({
+  // http://stackoverflow.com/questions/21044798/how-to-use-formdata-for-ajax-file-upload
+  var formData = new FormData();
+  formData.append('image', file);
+
+  fetch('/upload', {
     method: 'POST',
-    url: '/upload',
-    data: formData,
-    // THIS MUST BE SET FOR FILE UPLOADING
-    contentType: false,
-    processData: false
+    body: formData
   });
 
 })
-.catch(function(err) {
-  console.log(err);
-});
+.catch( err => console.log(err) );
 ```
+
+### Issues
+- Can be unpredictable with large (~10MB) files.
+- Where many resizing cycles are necessary it can be quite slow.
+
+### BONUS!
+`tools/convertJpgToBase64.js` can be used to turn a jpg into an importable Base64 string like so:  
+`FILE=imageFileName node tools/convertJpgToBase64.js`  
+(Leave `.js` off the filename.)
